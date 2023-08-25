@@ -1,8 +1,8 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import styles from './SidebarCards.module.scss'
 import Button, { BUTTONTYPE } from '../Button/Button'
 import { CARDFOCUSTYPE } from '../CardFocus/CardFocus'
-function SidebarCards({cardData,setCardFocusType,setSelectedCard}) {
+function SidebarCards({cardData,setCardFocusType,setSelectedCard,deckSelected,onDeleteDeckClickHandler}) {
     const onClickAddHandler=()=>{
         setCardFocusType(CARDFOCUSTYPE.ADD)
     }
@@ -11,10 +11,11 @@ function SidebarCards({cardData,setCardFocusType,setSelectedCard}) {
         setCardFocusType(CARDFOCUSTYPE.EDIT)
         setSelectedCard(item)
     }
+
     
   return (
     <div className={styles.SidebarCards}>
-    <h2>FlashCard <span>AI</span></h2>
+    <h2>PlaceHolder</h2>
     <h3>Cards</h3>
   <ul>
     <div className={styles.CardDeck}>
@@ -23,7 +24,7 @@ function SidebarCards({cardData,setCardFocusType,setSelectedCard}) {
     ))}
     </div>
   <Button buttonType={BUTTONTYPE.GREEN} onClick={onClickAddHandler}>Add Card</Button>
-  <Button buttonType={BUTTONTYPE.RED}>Delete Deck</Button>
+  <Button buttonType={BUTTONTYPE.RED} onClick={()=>{onDeleteDeckClickHandler(deckSelected)}}>Delete Deck</Button>
   <Button buttonType={BUTTONTYPE.DOTTED}>Test</Button>
   </ul></div>
   )
