@@ -1,0 +1,19 @@
+@import '../../colors';
+.TextPop{
+    color:$secondary-color;
+}
+
+.TextRed{
+    color:red;
+}
+
+.Description{
+    margin-top: 0px;
+    color: RGB(red($off-white), green($off-white), blue($off-white),0.9);
+}
+
+.Disclaimer{
+    margin-top: 0px;
+    font-size: 1rem;
+    color: RGB(red($off-white), green($off-white), blue($off-white),0.5);
+}
