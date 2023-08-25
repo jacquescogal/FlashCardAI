@@ -1,0 +1,10 @@
+@import '../../colors';
+
+.CardFocus{
+    position: fixed;
+    left: 250px+350px;
+    height: 100vh;
+    max-width: calc(100vw - 250px - 350px);
+    min-width: calc(100vw - 250px - 350px);
+    background-color: $background-color;
+}

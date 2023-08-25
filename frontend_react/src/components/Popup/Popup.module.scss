@@ -1,0 +1,32 @@
+@import '../../colors';
+
+.Popup{
+    position: fixed;
+    left: 50%;
+    right: 50%;
+    top:50%;
+    bottom: 50%;
+    display: flex;
+    flex-direction: column;
+    width: fit-content;
+    $p-lr:1rem;
+    padding-left: $p-lr;
+    padding-right: $p-lr;
+    height: 200px;
+    align-items: center;
+    background-color: $tertiary-color;
+    transform: translateX(-50%) translateY(-50%);
+    border-radius: 10px;
+    $p-tb: 1rem;
+    padding-top: $p-tb;
+    padding-bottom: $p-tb;
+    z-index: 1000;
+}
+
+.Backdrop{
+    position: fixed;
+    width: 100vw;
+    height: 100vh;
+    background-color: RGB(red($off-black),green($off-black),blue($off-black),0.7);
+    z-index: 200;
+}

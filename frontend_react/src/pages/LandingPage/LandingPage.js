@@ -1,7 +1,6 @@
 import React from 'react'
 import { useEffect,useState } from 'react';
 import axios from 'axios';
-import Card from '../../components/Card/Card';
 import OptionHolder from '../../components/OptionHolder/OptionHolder';
 import Button, { BUTTONTYPE } from '../../components/Button/Button';
 import styles from './LandingPage.module.scss'
@@ -44,7 +43,7 @@ function LandingPage() {
           &nbsp;and&nbsp;<span className={styles.TextPop}>mentor 🧑‍🏫</span>,<br/> providing you with an enhanced and objective learning experience.</p>
           <OptionHolder>
             <Button onClick={()=>{navigate('Home')}}>Guest Session</Button>
-            <Button type={BUTTONTYPE.DISABLED}>User Login</Button>
+            <Button buttonType={BUTTONTYPE.DISABLED}>User Login</Button>
           </OptionHolder>
           <p className={styles.Disclaimer}>User login is not supported until AWS SES unverified emailing permissions are approved for authentication purposes. <br/> Guest session data is stored in localStorage which is sufficient except GPT-4 responses.
           <br/>GPT-4 responses are saved on AWS dynamoDB and are deleted 1 minute after client retrieves it.</p>
