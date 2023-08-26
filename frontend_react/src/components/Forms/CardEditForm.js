@@ -44,6 +44,13 @@ function CardEditForm({checkDuplicate,editCard,selectedCard,deletecard}) {
         editCard({uuid,term,answer});
     };
 
+    const handleAnswerKeyDown = (event)=>{
+        if (event.keyCode===13 && !event.shiftKey){
+            event.preventDefault();
+            handleSubmit(event);
+        }
+    }
+
   return (
     <>
         <h2 className={styles.Hide}>PlaceHolder</h2>
@@ -72,6 +79,7 @@ function CardEditForm({checkDuplicate,editCard,selectedCard,deletecard}) {
             onChange={handleAnsInputChange}
             style={{ borderColor: ansError ? 'red' : '' }}
             className={styles.AnsInput}
+            onKeyDown={handleAnswerKeyDown}
             />
             </div>
 
