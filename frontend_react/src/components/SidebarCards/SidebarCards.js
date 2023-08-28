@@ -33,7 +33,7 @@ function SidebarCards({ cardBackdrop, cardData, setCardFocusType, setSelectedCar
         </div>
         <Button buttonType={BUTTONTYPE.GREEN} onClick={onClickAddHandler}>Add Card</Button>
         <Button buttonType={BUTTONTYPE.RED} onClick={() => { onDeleteDeckClickHandler(deckSelected); setCardFocusType(CARDFOCUSTYPE.DEFAULT) }}>Delete Deck</Button>
-        <Button buttonType={(cardData && cardData.length>0)?BUTTONTYPE.TEST:BUTTONTYPE.DISABLED} onClick={onClickTestHandler}>Review</Button>
+        <Button buttonType={(cardData && cardData.length>0)?BUTTONTYPE.TEST:BUTTONTYPE.DISABLED} onClick={(cardData && cardData.length>0)?onClickTestHandler:()=>{}}>Review</Button>
       </ul></div>}
       </>
   )

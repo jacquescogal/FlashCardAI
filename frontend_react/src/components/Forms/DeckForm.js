@@ -1,11 +1,21 @@
-import React, { useState } from 'react'
-import Button from '../Button/Button';
+import React, { useEffect, useRef, useState } from 'react'
+import Button, { BUTTONTYPE } from '../Button/Button';
 import styles from './Forms.module.scss'
 function DeckForm({addDeck, checkDuplicate, updateDeck,setPopupOpen}) {
+    const inputRef=useRef(null);
     const [name, setName] = useState('');
     const [nameError, setNameError] = useState(''); // New nameError state
+    const [buttonActive,setButtonActive] = useState(false);
+
+    useEffect(()=>{
+        if (inputRef) inputRef.current.focus();
+    },[])
 
     const handleInputChange = (e) => {
+        if (e.target.value.length >=4 && checkDuplicate(e.target.value)===false) { // Validation check
+            setButtonActive(true);
+        }
+        else setButtonActive(false);
         setName(e.target.value);
         setNameError(''); // Clear nameError on input change
     };
@@ -34,6 +44,7 @@ function DeckForm({addDeck, checkDuplicate, updateDeck,setPopupOpen}) {
                     Name:
                 </label>
                 <input 
+                    ref={inputRef}
                     type="text" 
                     value={name} 
                     onChange={handleInputChange}
@@ -41,7 +52,7 @@ function DeckForm({addDeck, checkDuplicate, updateDeck,setPopupOpen}) {
                 />
             </div>
             {nameError && <div style={{ color: 'red', marginTop: '5px' }}>{nameError}</div>}
-            <Button type="submit">Submit</Button>
+            <Button buttonType={(buttonActive===true)?BUTTONTYPE.GREEN:BUTTONTYPE.DISABLED} style={{justifySelf:'centre', width:'80%'}} type="submit" isActive={buttonActive} >Submit</Button>
         </form>
         </>
     );
