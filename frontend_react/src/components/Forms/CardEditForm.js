@@ -1,27 +1,41 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import styles from './Forms.module.scss'
 import Button, { BUTTONTYPE } from '../Button/Button';
+import { toast } from 'react-toastify';
 function CardEditForm({checkDuplicate,editCard,selectedCard,deletecard}) {
+    const termRef=useRef(null);
     const uuid=selectedCard.uuid;
     const [oldTerm,setOldTerm]=useState('');
     const [term, setTerm] = useState(selectedCard.term);
     const [termError, setTermError] = useState(''); 
     const [answer, setAnswer] = useState(selectedCard.answer);
     const [ansError, setAnsError] = useState(''); 
+    const [buttonActive,setButtonActive]=useState(false);
+
+    useEffect(()=>{
+        if (termRef && termRef.current) termRef.current.focus();
+    },[termRef])
+
     useEffect(()=>{
         setOldTerm(selectedCard.term);
         setTerm(selectedCard.term);
         setAnswer(selectedCard.answer);
         setAnsError('');
-        setTermError('');
+        setTermError('');setButtonActive(false);
+        if (termRef && termRef.current) termRef.current.focus();
     },[selectedCard])
+
     const handleTermInputChange = (e) => {
         setTerm(e.target.value);
+        if (e.target.value.length>2 && answer.length>0) setButtonActive(true);
+        else setButtonActive(false);
         setTermError(''); 
     };
 
     const handleAnsInputChange = (e) => {
         setAnswer(e.target.value);
+        if (term.length>2 && e.target.value.length>0) setButtonActive(true);
+        else setButtonActive(false);
         setAnsError(''); 
     };
 
@@ -42,6 +56,7 @@ function CardEditForm({checkDuplicate,editCard,selectedCard,deletecard}) {
         }
         setOldTerm(term);
         editCard({uuid,term,answer});
+        toast.success("Card updated")
     };
 
     const handleAnswerKeyDown = (event)=>{
@@ -61,6 +76,7 @@ function CardEditForm({checkDuplicate,editCard,selectedCard,deletecard}) {
             Term:
             </label>
             <input 
+            ref={termRef}
             type="text" 
             value={term} 
             onChange={handleTermInputChange}
@@ -85,7 +101,7 @@ function CardEditForm({checkDuplicate,editCard,selectedCard,deletecard}) {
 
             {termError && <div style={{ color: 'red', marginTop: '5px' }}>{termError}</div>}
             {ansError && <div style={{ color: 'red', marginTop: '5px' }}>{ansError}</div>}
-            <Button buttonType={BUTTONTYPE.NORMAL} type="submit" width='20%'>Update Card</Button>
+            <Button buttonType={BUTTONTYPE.NORMAL} type="submit" width='20%' isActive={buttonActive}>Update Card</Button>
             <Button buttonType={BUTTONTYPE.RED} type="button" width='20%' onClick={()=>{deletecard({uuid})}}>Delete Card</Button>
         </form>
         </>

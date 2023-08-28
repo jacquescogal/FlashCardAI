@@ -7,30 +7,8 @@ import styles from './LandingPage.module.scss'
 import { useNavigate } from 'react-router-dom';
 
 function LandingPage() {
-  const [data, setData] = useState(null);
-  const [loading, setLoading] = useState(true);
-  let called=false;
   const navigate=useNavigate();
 
-  // useEffect(() => {
-  //     const fetchData = async () => {
-  //         try {
-  //             if (called==true) return;
-  //             else called=true;
-  //             const response = await axios.get('http://127.0.0.1:5000/answer', {
-  //                 params: {
-  //                     user_content: 'hello'
-  //                 }
-  //             });
-  //             console.log(response.data['body'])
-  //             setData(response.data['body']);
-  //             setLoading(false);
-  //         } catch (error){
-  //           console.log(error)
-  //         }
-  //     };
-  //     fetchData();
-  // }, []);
   return (
     <div>
         <header className="App-header Backdrop">

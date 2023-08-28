@@ -1,6 +1,7 @@
 import React, {  useEffect, useRef, useState } from 'react'
 import styles from './Forms.module.scss'
 import Button from '../Button/Button';
+import { toast } from 'react-toastify';
 function CardAddForm({checkDuplicate,addCard}) {
     const termRef=useRef(null);
     const answerRef=useRef(null)
@@ -15,23 +16,23 @@ function CardAddForm({checkDuplicate,addCard}) {
     },[termRef])
 
     const handleTermInputChange = (e) => {
-        if (term.length>2 && answer.length>0) setButtonActive(true);
-        else setButtonActive(false);
         setTerm(e.target.value);
+        if (e.target.value.length>2 && answer.length>0) setButtonActive(true);
+        else setButtonActive(false);
         setTermError(''); 
     };
 
     const handleAnsInputChange = (e) => {
-        if (term.length>2 && answer.length>0) setButtonActive(true);
-        else setButtonActive(false);
         setAnswer(e.target.value);
+        if (term.length>2 && e.target.value.length>0) setButtonActive(true);
+        else setButtonActive(false);
         setAnsError(''); 
     };
 
     const handleSubmit = (e) => {
         e.preventDefault();
         if (term.length <3) { // Validation check
-            setTermError('Term must be 3 at least characters long.');
+            setTermError('Term must be at least 3 characters long.');
             return;
         }
         else if (checkDuplicate(term)===true){
@@ -49,6 +50,7 @@ function CardAddForm({checkDuplicate,addCard}) {
         setAnswer('');
         setAnsError(''); 
         setButtonActive(false)
+        toast.success("Card added")
     };
 
     const handleTermKeyDown = (event)=>{

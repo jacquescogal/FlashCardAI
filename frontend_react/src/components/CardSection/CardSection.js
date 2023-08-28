@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import SidebarCards from '../SidebarCards/SidebarCards'
 import CardFocus, { CARDFOCUSTYPE } from '../CardFocus/CardFocus'
 import { v4 as uuidv4 } from 'uuid';
-function CardSection({deckSelected,onDeleteDeckClickHandler}) {
+function CardSection({toggleFocus,focusBackdrop,cardBackdrop,deckSelected,onDeleteDeckClickHandler}) {
     const [cardData,setCardData]=useState([
     ]);
     const [cardFocusType,setCardFocusType]=useState(CARDFOCUSTYPE.DEFAULT);
@@ -89,8 +89,8 @@ function CardSection({deckSelected,onDeleteDeckClickHandler}) {
       }
   return (
     <div>
-        <SidebarCards cardData={cardData} setCardFocusType={setCardFocusType} setSelectedCard={setSelectedCard} deckSelected={deckSelected}  onDeleteDeckClickHandler={onDeleteDeckClickHandler}/>
-        <CardFocus cardFocusType={cardFocusType} checkDuplicate={checkDuplicate} addCard={addCard} editCard={editCard} deletecard={deletecard} selectedCard={selectedCard}/>
+        <SidebarCards  cardBackdrop={cardBackdrop} cardData={cardData} setCardFocusType={setCardFocusType} setSelectedCard={setSelectedCard} deckSelected={deckSelected}  onDeleteDeckClickHandler={onDeleteDeckClickHandler}/>
+        <CardFocus toggleFocus={toggleFocus} focusBackdrop={focusBackdrop} cardData={cardData} cardFocusType={cardFocusType} checkDuplicate={checkDuplicate} addCard={addCard} editCard={editCard} deletecard={deletecard} selectedCard={selectedCard} deckSelected={deckSelected}/>
     </div>
   )
 }

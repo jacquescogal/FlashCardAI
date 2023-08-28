@@ -9,11 +9,13 @@ export const CARDFOCUSTYPE={
     ANSWER:"answer",
     ADD:"add"
 }
-function CardFocus({cardFocusType,checkDuplicate,addCard,editCard,selectedCard,deletecard}) {
+function CardFocus({toggleFocus,focusBackdrop, cardData,cardFocusType,checkDuplicate,addCard,editCard,selectedCard,deletecard,deckSelected}) {
   return (
     <div className={styles.CardFocus}>
+      {(focusBackdrop)?<div className={styles.GlassBackdrop}/>:<></>}
+      {cardFocusType===CARDFOCUSTYPE.DEFAULT && <div className={styles.DefaultText}>Add, Edit, Remove or review cards here</div>}
         {cardFocusType===CARDFOCUSTYPE.EDIT && <CardEditForm checkDuplicate={checkDuplicate} editCard={editCard} selectedCard={selectedCard} deletecard={deletecard}/>}
-        {cardFocusType===CARDFOCUSTYPE.ANSWER && <CardAnsForm/>}
+        {cardFocusType===CARDFOCUSTYPE.ANSWER && <CardAnsForm deckSelected={deckSelected} cardData={cardData} toggleFocus={toggleFocus}/>}
         {cardFocusType===CARDFOCUSTYPE.ADD && <CardAddForm checkDuplicate={checkDuplicate} addCard={addCard}/>}
     </div>
   )

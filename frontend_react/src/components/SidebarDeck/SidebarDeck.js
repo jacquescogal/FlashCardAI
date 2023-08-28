@@ -3,9 +3,10 @@ import styles from './SidebarDeck.module.scss'
 import Button,{BUTTONTYPE} from '../Button/Button'
 import Popup from '../Popup/Popup';
 import DeckForm from '../Forms/DeckForm';
-function SidebarDeck({checkDuplicate, addDeck, updateDeck, deckData=[], onDeckClickHandler, onNewDeckClickHandler, setPopupOpen, popupOpen}) {
+function SidebarDeck({deckBackdrop,checkDuplicate, addDeck, updateDeck, deckData=[], onDeckClickHandler, onNewDeckClickHandler, setPopupOpen, popupOpen}) {
   return (
     <>
+    {(deckBackdrop===true)?<div className={styles.GlassBackdrop}></div>:<></>}
     {(popupOpen===true)?<Popup setPopupOpen={setPopupOpen}><DeckForm checkDuplicate={checkDuplicate} addDeck={addDeck} updateDeck={updateDeck} setPopupOpen={setPopupOpen}/></Popup>:null}
     <div className={styles.SidebarDeck}>
       

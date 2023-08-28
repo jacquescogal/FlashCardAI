@@ -8,3 +8,27 @@
     min-width: calc(100vw - 250px - 350px);
     background-color: $background-color;
 }
+
+.GlassBackdrop{
+    position: fixed;
+    max-width: calc(100vw - 250px - 350px);
+    min-width: calc(100vw - 250px - 350px);
+    height: 100vh;
+    background-color: RGB(red($off-black),green($off-black),blue($off-black),0.7);
+    z-index: 200;
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+  }
+
+.DefaultText{
+    display: flex;
+    align-items: center; /* This centers children vertically */
+    height: 100vh; /* or whatever height you want */
+    width: 100%;
+    font-size: 1.5rem;
+    color: RGB(red(gray),green(gray),blue(gray),0.5);
+    text-align: center;
+    justify-content: center;
+    
+
+}

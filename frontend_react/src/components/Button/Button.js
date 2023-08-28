@@ -7,24 +7,53 @@ export const BUTTONTYPE = {
   DISABLED: 'disabled',
   DOTTED: 'dotted',
   RED: 'red',
-  GREEN: 'green'
+  GREEN: 'green',
+  TEST: 'test'
 };
 
-function Button({children, onClick,type,isTall=true, isActive,width='80%', buttonType=BUTTONTYPE.NORMAL}) {
+function Button({children,style,className, onClick,type,isTall=true, isActive,width='80%', buttonType=BUTTONTYPE.NORMAL}) {
   const styledButtonRef = useRef(null);
   const buttonRef = useRef(null);
   useEffect(()=>{
-    if (styledButtonRef.current && buttonType===BUTTONTYPE.NORMAL) styledButtonRef.current.classList.add(styles.Enabled); 
-    else if (styledButtonRef.current && buttonType===BUTTONTYPE.ALT) {
-      styledButtonRef.current.classList.add(styles.Enabled); 
-      styledButtonRef.current.classList.add(styles.Alt); 
-    }
-    else if (styledButtonRef.current && buttonType===BUTTONTYPE.DISABLED) styledButtonRef.current.classList.add(styles.Disabled);
-    else if (styledButtonRef.current && buttonType===BUTTONTYPE.DOTTED) styledButtonRef.current.classList.add(styles.Dotted);
-    else if (styledButtonRef.current && buttonType===BUTTONTYPE.RED) styledButtonRef.current.classList.add(styles.Red);
-    else if (styledButtonRef.current && buttonType===BUTTONTYPE.GREEN) styledButtonRef.current.classList.add(styles.Green);
+    console.log(buttonType)
+    if (styledButtonRef.current){
+      styledButtonRef.current.classList.remove(styles.Enabled);
+      styledButtonRef.current.classList.remove(styles.Test);
+      styledButtonRef.current.classList.remove(styles.Disabled);
+      styledButtonRef.current.classList.remove(styles.Alt);
+      styledButtonRef.current.classList.remove(styles.Dotted);
+      styledButtonRef.current.classList.remove(styles.Red);
+      styledButtonRef.current.classList.remove(styles.Green);
+      switch (buttonType){
+        case BUTTONTYPE.NORMAL:
+          styledButtonRef.current.classList.add(styles.Enabled);
+          break;
+        case BUTTONTYPE.ALT:
+          styledButtonRef.current.classList.add(styles.Enabled); 
+          styledButtonRef.current.classList.add(styles.Alt); 
+          break;
+        case BUTTONTYPE.DISABLED:
+          styledButtonRef.current.classList.add(styles.Disabled);
+          break;
+        case BUTTONTYPE.DOTTED:
+          styledButtonRef.current.classList.add(styles.Dotted);
+          break;
+        case BUTTONTYPE.RED: 
+          styledButtonRef.current.classList.add(styles.Red);  
+          break;
+        case BUTTONTYPE.GREEN:
+          styledButtonRef.current.classList.add(styles.Green);
+          break;
+        case BUTTONTYPE.TEST:
+          styledButtonRef.current.classList.add(styles.Test);
+          break;
+        default:
+          styledButtonRef.current.classList.add(styles.Enabled);
+          break;
+      }
+    } 
     if (styledButtonRef.current && isTall===true) styledButtonRef.current.classList.add(styles.Tall);
-  },[])
+  },[buttonType])
 
   useEffect(()=>{
     if (styledButtonRef.current && isActive) styledButtonRef.current.classList.add(styles.Active);
@@ -35,10 +64,10 @@ function Button({children, onClick,type,isTall=true, isActive,width='80%', butto
     if (buttonRef.current) buttonRef.current.click();
   }
   return (
-    <>
-    <div ref={styledButtonRef}   className={`${styles.Button}`} style={{ width:width }} onClick={onClickHandler}>{children}</div>
+    <div style={{ width:width,...style}} className={className}>
+    <div ref={styledButtonRef}   className={`${styles.Button}`}  onClick={onClickHandler}>{children}</div>
     <button ref={buttonRef} type={type} className={styles.hiddenButton} onClick={onClick}/>
-    </>
+    </div>
   )
 }
 

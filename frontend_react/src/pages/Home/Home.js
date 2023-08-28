@@ -13,14 +13,37 @@ function Home() {
     ]
   );
 
+  const [deckBackdrop,setDeckBackdrop]=useState(false);
+  const [cardBackdrop,setCardBackdrop]=useState(false);
+  const [focusBackdrop,setFocusBackdrop]=useState(false);
+
+  const toggleFocus=(setTo=false)=>{
+    if (deckBackdrop===true || cardBackdrop===true || setTo===true){
+      setDeckBackdrop(false);
+      setCardBackdrop(false);
+    }
+    else{
+      setDeckBackdrop(true);
+      setCardBackdrop(true);
+    }
+  }
+
   useEffect(()=>{
     updateDeck();
+    // const newDeck=deckData;
+    // newDeck.forEach(e=>{
+    //   e.active=false;
+    // })
+    // setDeckData(newDeck);
   },[])
 
   const updateDeck=()=>{
     const data=localStorage.getItem('deckData')
     if (data) {
       const parsedData = JSON.parse(data);
+      parsedData.forEach(e=>{
+          e.active=false;
+        })
       setDeckData(parsedData);
     } 
   }
@@ -62,8 +85,8 @@ function Home() {
   }
   return (
     <div className='Backdrop'>
-        <CardSection deckSelected={deckSelected} onDeleteDeckClickHandler={onDeleteDeckClickHandler}/>
-        <SidebarDeck  checkDuplicate={checkDuplicate} addDeck={addDeck} updateDeck={updateDeck} deckData={deckData} onDeckClickHandler={onDeckClickHandler} onNewDeckClickHandler={onNewDeckClickHandler} popupOpen={popupOpen} setPopupOpen={setPopupOpen}/>
+        <CardSection toggleFocus={toggleFocus} focusBackdrop={focusBackdrop} cardBackdrop={cardBackdrop} deckSelected={deckSelected} onDeleteDeckClickHandler={onDeleteDeckClickHandler}/>
+        <SidebarDeck deckBackdrop={deckBackdrop} checkDuplicate={checkDuplicate} addDeck={addDeck} updateDeck={updateDeck} deckData={deckData} onDeckClickHandler={onDeckClickHandler} onNewDeckClickHandler={onNewDeckClickHandler} popupOpen={popupOpen} setPopupOpen={setPopupOpen}/>
     </div>
   )
 }
