@@ -15,6 +15,7 @@ function SidebarDeck({deckBackdrop,checkDuplicate, addDeck, updateDeck, deckData
     <img src={logoImage} className={styles.LogoImage} alt="Logo" />
         <h2>FlashCard <span>AI</span></h2>
         <h3>Decks</h3>
+        <h3 className={styles.Greet}>Hello {(localStorage.getItem('username')!==null)?localStorage.getItem('username'):"guest"}</h3>
       <ul>
         
         {deckData.map(item => (

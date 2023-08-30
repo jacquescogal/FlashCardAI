@@ -5,6 +5,7 @@ import { v4 as uuidv4 } from 'uuid';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
+import style from './Home.module.scss'
 
 function Home() {
   const nav=useNavigate();
@@ -166,7 +167,7 @@ function Home() {
 
 
   return (
-    <div className='Backdrop'>
+    <div className={style.Home}>
       <CardSection saveToDB={saveToDB} toggleFocus={toggleFocus} focusBackdrop={focusBackdrop} cardBackdrop={cardBackdrop} deckSelected={deckSelected} onDeleteDeckClickHandler={onDeleteDeckClickHandler} />
       <SidebarDeck deckBackdrop={deckBackdrop} checkDuplicate={checkDuplicate} addDeck={addDeck} updateDeck={updateDeck} deckData={deckData} onDeckClickHandler={onDeckClickHandler} onNewDeckClickHandler={onNewDeckClickHandler} popupOpen={popupOpen} setPopupOpen={setPopupOpen} />
     </div>
