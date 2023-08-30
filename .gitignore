@@ -26,3 +26,10 @@ secret.txt
 
 #temporary
 backend_flask/*
+openai-backend/*
+flaskapp-test/*
+test/*
+# Elastic Beanstalk Files
+.elasticbeanstalk/*
+!.elasticbeanstalk/*.cfg.yml
+!.elasticbeanstalk/*.global.yml

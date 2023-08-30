@@ -3,7 +3,7 @@ import Button, { BUTTONTYPE } from '../Button/Button';
 import styles from './Forms.module.scss'
 import axios from 'axios';
 import { toast } from 'react-toastify';
-function CardAnsForm({ deckSelected, cardData, toggleFocus }) {
+function CardAnsForm({ resetFocus,deckSelected, cardData, toggleFocus }) {
   const termRef = useRef(null);
   const attemptRef = useRef(null);
   const leftRef = useRef(null);
@@ -83,7 +83,7 @@ function CardAnsForm({ deckSelected, cardData, toggleFocus }) {
 
 
   const nextClickHandler = () => {
-    if (selectedIndex >= shuffledCards.length || fetchData === true || selectedCard.score === null) return;
+    if (selectedIndex >= shuffledCards.length || fetchData === true || selectedCard.processed===false) return;
     setSelectedCard({ ...shuffledCards[selectedIndex + 1], attempt: shuffledCards[selectedIndex + 1].attempt ? shuffledCards[selectedIndex + 1].attempt : '', feedback: shuffledCards[selectedIndex + 1].feedback ? shuffledCards[selectedIndex + 1].feedback : '', score: shuffledCards[selectedIndex + 1].score ? shuffledCards[selectedIndex + 1].score : null, processed: shuffledCards[selectedIndex + 1].processed ? shuffledCards[selectedIndex + 1].processed : false });
     setSelectedIndex(selectedIndex + 1);
   }
@@ -114,14 +114,20 @@ function CardAnsForm({ deckSelected, cardData, toggleFocus }) {
 
   useEffect(() => {
     if (fetchData === true) {
-      const eventSource = new EventSource(`http://localhost:5000/check_answer?subject=${deckSelected}&term=${selectedCard.term}&answer=${selectedCard.answer}&attempt=${attempt}`);
+      const eventSource = new EventSource(`https://api.flashcardai.app/check_answer?subject=${deckSelected}&term=${selectedCard.term}&answer=${selectedCard.answer}&attempt=${attempt}`)
 
       eventSource.onmessage = (event) => {
         if (event.data === "TERMINATE") {
           setFetchData(false);
           setRightActive(true);
           setButtonActive(false);
-
+        }
+        else if (event.data === "LIMIT") {
+          toast.error("Shared pool daily quota reached (200/day). Come back again tomorrow.")
+          setAttemptError("Shared pool daily quota reached (200/day). Come back again tomorrow.")
+          setFetchData(false);
+          setRightActive(true);
+          setButtonActive(false);
         }
         else {
           setFeedback(prevData => `${prevData}${event.data}`.replace("|", "\n"));
@@ -178,6 +184,7 @@ function downloadCSV(arrayOfObjects) {
 
 const handleExit=()=>{
   toggleFocus(true);
+  resetFocus();
 }
 
   return (
@@ -206,7 +213,7 @@ const handleExit=()=>{
             <label>
               Attempt:
             </label>
-            <textarea
+            <textarea maxLength="200"
               ref={attemptRef}
               type="text"
               value={attempt}
@@ -221,9 +228,9 @@ const handleExit=()=>{
             <label>
               Answer:
             </label>
-            <textarea readOnly
+            <textarea readOnly 
               type="text"
-              value={selectedCard?.answer}
+              value={(selectedCard.processed===true || fetchData===true)?selectedCard?.answer:'hidden'}
               className={styles.AnsInput}
             />
           </div>
@@ -244,20 +251,20 @@ const handleExit=()=>{
               <Button className={styles.LeftButton} buttonType={BUTTONTYPE.NORMAL} type="button" width='20%' isActive={leftActive} onClick={prevClickHandler}>{"<"}</Button>
             </> : <div></div>}
             <button ref={leftRef} style={{ display: 'none' }} onClick={prevClickHandler} />
-            <Button buttonType={BUTTONTYPE.NORMAL} type="submit" width='80%' isActive={buttonActive} onClick={handleSubmit}>Check Attempt</Button>
+            <Button buttonType={(buttonActive===true)?BUTTONTYPE.NORMAL:BUTTONTYPE.DISABLED} type="submit" width='80%' isActive={buttonActive} onClick={handleSubmit}>Check Attempt</Button>
             <button ref={rightRef} style={{ display: 'none' }} onClick={nextClickHandler} />
-            {selectedIndex < shuffledCards.length - 1 ? <Button className={styles.RightButton} buttonType={BUTTONTYPE.NORMAL} type="button" width='20%' isActive={rightActive} onClick={nextClickHandler}>{">"}</Button> : <div></div>}
+            {selectedIndex < shuffledCards.length - 1 ? <Button className={styles.RightButton} buttonType={(selectedIndex >= shuffledCards.length || fetchData === true || selectedCard.processed===false)?BUTTONTYPE.DISABLED:BUTTONTYPE.NORMAL} type="button" width='20%' isActive={rightActive} onClick={nextClickHandler}>{">"}</Button> : <div></div>}
             <div></div>
-            {selectedIndex === shuffledCards.length - 1 && feedback !== '' ? <Button buttonType={BUTTONTYPE.NORMAL} type="submit" width='80%' isActive={finishActive} onClick={() => { setFinishPage(true) }}>Finish</Button> : <div />}
+            {selectedIndex === shuffledCards.length - 1 && feedback !== '' && fetchData===false? <Button buttonType={BUTTONTYPE.NORMAL} type="submit" width='80%' isActive={finishActive} onClick={() => { setFinishPage(true) }}>Finish</Button> : <div />}
           </div>
         </form>
         : <>
-          <h3>Total: {shuffledCards.length}</h3>
+          <h3>Total Questions: {shuffledCards.length}</h3>
           <h3>Correct: {rightCount} ({(rightCount/shuffledCards.length*100).toFixed(2)}%)</h3>
           <h3>Wrong: {wrongCount} ({(wrongCount/shuffledCards.length*100).toFixed(2)}%)</h3>
           <div className={styles.FinishButtonGroup}>
-          <Button style={{justifySelf:'centre'}} buttonType={BUTTONTYPE.NORMAL} type="submit" width='50%' isActive={buttonActive} onClick={() => downloadCSV(shuffledCards)}>Download Attempt</Button>
-          <Button style={{justifySelf:'centre'}} buttonType={BUTTONTYPE.RED} type="submit" width='50%' isActive={buttonActive} onClick={handleExit}>Finish & Exit</Button>
+          <Button style={{justifySelf:'centre'}} buttonType={BUTTONTYPE.NORMAL} type="button" width='50%' isActive={buttonActive} onClick={() => downloadCSV(shuffledCards)}>Download Attempt</Button>
+          <Button style={{justifySelf:'centre'}} buttonType={BUTTONTYPE.RED} type="button" width='50%' isActive={buttonActive} onClick={handleExit}>Finish Review</Button>
           </div>
         </>}
     </>

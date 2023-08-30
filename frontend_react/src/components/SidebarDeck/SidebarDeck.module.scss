@@ -1,11 +1,11 @@
-@import '../../colors';
+@import '../../styleConstants';
 
 .SidebarDeck {
     width: 250px;
     height: 100vh;
     background-color: $primary-color;
     animation: SidebarDeckPop 1s ease-in-out 0s 1 ;
-    z-index: 800;
+    z-index: $sidebar-deck-layer;
     position: fixed;
     top: 0;
     left: 0;
@@ -37,7 +37,7 @@
     width: 250px;
     height: 100vh;
     background-color: RGB(red($off-black),green($off-black),blue($off-black),0.7);
-    z-index: 1000;
+    z-index: $sidebar-cover;
     backdrop-filter: blur(5px);
     -webkit-backdrop-filter: blur(5px);
   }
@@ -50,12 +50,19 @@
     80%{
         transform: translateX(0px);
         padding-left: 20px;
-        z-index: 500;
+        z-index: $sidebar-deck-layer;
     }
     100%{
         transform: translateX(0px);
         padding-left: 0px;
-        z-index: 500;
+        z-index: $sidebar-deck-layer;
     }
     
   }
+
+  .LogoImage{
+    height: 5rem;
+    border-radius: 10px;
+    margin-top: 1rem;
+  }
+  

@@ -1,0 +1,9 @@
+@import '../../styleConstants';
+.OutsideFocus{
+    position: fixed;
+    height: 100vh;
+    width: 250px+350px;
+    background-color: black;
+    opacity: 0;
+    z-index: $sidebar-cover-overlay;
+}

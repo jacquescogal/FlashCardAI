@@ -1,4 +1,4 @@
-@import '../../colors';
+@import '../../styleConstants';
 .TextPop{
     color:$secondary-color;
 }
@@ -15,5 +15,10 @@
 .Disclaimer{
     margin-top: 0px;
     font-size: 1rem;
-    color: RGB(red($off-white), green($off-white), blue($off-white),0.5);
+    color: RGB(red($off-white), green($off-white)-200, blue($off-white)-200,0.8);
+}
+
+.LogoImage{
+    height: 5rem;
+    border-radius: 10px;
 }

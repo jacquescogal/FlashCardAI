@@ -3,6 +3,7 @@ import styles from './Button.module.scss'
 
 export const BUTTONTYPE = {
   NORMAL: 'normal',
+  HARDEDGE:'hardedge',
   ALT: 'deck',
   DISABLED: 'disabled',
   DOTTED: 'dotted',
@@ -18,6 +19,7 @@ function Button({children,style,className, onClick,type,isTall=true, isActive,wi
     console.log(buttonType)
     if (styledButtonRef.current){
       styledButtonRef.current.classList.remove(styles.Enabled);
+      styledButtonRef.current.classList.remove(styles.HardEdge);
       styledButtonRef.current.classList.remove(styles.Test);
       styledButtonRef.current.classList.remove(styles.Disabled);
       styledButtonRef.current.classList.remove(styles.Alt);
@@ -28,6 +30,9 @@ function Button({children,style,className, onClick,type,isTall=true, isActive,wi
         case BUTTONTYPE.NORMAL:
           styledButtonRef.current.classList.add(styles.Enabled);
           break;
+          case BUTTONTYPE.HARDEDGE:
+            styledButtonRef.current.classList.add(styles.HardEdge);
+            break;
         case BUTTONTYPE.ALT:
           styledButtonRef.current.classList.add(styles.Enabled); 
           styledButtonRef.current.classList.add(styles.Alt); 

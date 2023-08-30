@@ -1,4 +1,4 @@
-@import '../../colors';
+@import '../../styleConstants';
 
 .Popup{
     position: fixed;
@@ -12,7 +12,7 @@
     $p-lr:1rem;
     padding-left: $p-lr;
     padding-right: $p-lr;
-    height: 200px;
+    height: fit-content;
     align-items: center;
     background-color: $tertiary-color;
     transform: translateX(-50%) translateY(-50%);
@@ -20,7 +20,7 @@
     $p-tb: 1rem;
     padding-top: $p-tb;
     padding-bottom: $p-tb;
-    z-index: 1200;
+    z-index: $popup-window;
 }
 
 .Backdrop{
@@ -28,5 +28,6 @@
     width: 100vw;
     height: 100vh;
     background-color: RGB(red($off-black),green($off-black),blue($off-black),0.7);
-    z-index: 1000;
+    z-index: $popup-backdrop;
 }
+

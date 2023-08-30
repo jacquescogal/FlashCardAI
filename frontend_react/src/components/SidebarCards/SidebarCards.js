@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import styles from './SidebarCards.module.scss'
 import Button, { BUTTONTYPE } from '../Button/Button'
 import { CARDFOCUSTYPE } from '../CardFocus/CardFocus'
-function SidebarCards({ cardBackdrop, cardData, setCardFocusType, setSelectedCard, deckSelected, onDeleteDeckClickHandler }) {
+function SidebarCards({ setOutsideFocus,cardBackdrop, cardData, setCardFocusType, setSelectedCard, deckSelected, onDeleteDeckClickHandler }) {
   const onClickAddHandler = () => {
     setCardFocusType(CARDFOCUSTYPE.ADD)
   }
@@ -14,6 +14,7 @@ function SidebarCards({ cardBackdrop, cardData, setCardFocusType, setSelectedCar
 
   const onClickTestHandler = () => {
     setCardFocusType(CARDFOCUSTYPE.ANSWER)
+    setOutsideFocus(true);
   }
 
 

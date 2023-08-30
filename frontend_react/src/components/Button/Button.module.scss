@@ -1,4 +1,4 @@
-@import '../../colors';
+@import '../../styleConstants';
 
 .Button {
     border-radius: 8px;
@@ -17,6 +17,26 @@
       padding-top: $p-tb;
       padding-bottom: $p-tb;
     }
+
+    &.HardEdge{
+      border-radius: 0px;
+      background-color: $primary-color;
+      border: 3px solid $primary-color;
+      color: $secondary-color;
+      
+      cursor: pointer;
+      &:hover {
+        color: $primary-color;
+        background-color: $secondary-color;
+        border: 3px solid $secondary-color;
+    }
+    &.Active {
+      color: $primary-color;
+      background-color: $secondary-color;
+      border: 3px solid $secondary-color;
+    }
+    
+  }
 
     &.Enabled{
       background-color: $primary-color;
@@ -132,3 +152,4 @@
   .hiddenButton{
     display: none;
   }
+  

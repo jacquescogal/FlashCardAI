@@ -2,11 +2,13 @@ import React, { useEffect, useState } from 'react'
 import SidebarCards from '../SidebarCards/SidebarCards'
 import CardFocus, { CARDFOCUSTYPE } from '../CardFocus/CardFocus'
 import { v4 as uuidv4 } from 'uuid';
-function CardSection({toggleFocus,focusBackdrop,cardBackdrop,deckSelected,onDeleteDeckClickHandler}) {
+import style from './CardSection.module.scss'
+function CardSection({saveToDB,toggleFocus,focusBackdrop,cardBackdrop,deckSelected,onDeleteDeckClickHandler}) {
     const [cardData,setCardData]=useState([
     ]);
     const [cardFocusType,setCardFocusType]=useState(CARDFOCUSTYPE.DEFAULT);
     const [selectedCard,setSelectedCard]=useState({uuid:null,term:'',answer:'',active:false})
+    const [outsideFocus,setOutsideFocus]=useState(false);
 
     useEffect(()=>{
         updateCards();
@@ -38,7 +40,7 @@ function CardSection({toggleFocus,focusBackdrop,cardBackdrop,deckSelected,onDele
     const checkDuplicate=(term)=>{
         var answer=false;
         cardData.forEach(card=>{
-            if (card.term===term) answer=true;
+            if (card.term.toLowerCase().trim()===term.toLowerCase().trim()) answer=true;
         })
         return answer;
     }
@@ -48,6 +50,7 @@ function CardSection({toggleFocus,focusBackdrop,cardBackdrop,deckSelected,onDele
         data.push({uuid:uuidv4(),term:term.toLowerCase(),answer:answer,active:false});
         localStorage.setItem(deckSelected, JSON.stringify(data));
         updateCards();
+        saveToDB();
     }
 
     const editCard=({uuid,term,answer})=>{
@@ -60,6 +63,7 @@ function CardSection({toggleFocus,focusBackdrop,cardBackdrop,deckSelected,onDele
         })
         localStorage.setItem(deckSelected, JSON.stringify(data));
         updateCards();
+        saveToDB();
     }
 
     const deletecard=({uuid})=>{
@@ -75,6 +79,7 @@ function CardSection({toggleFocus,focusBackdrop,cardBackdrop,deckSelected,onDele
         }
         localStorage.setItem(deckSelected, JSON.stringify(data));
         updateCards();
+        saveToDB();
     }
 
     const updateCards=()=>{
@@ -87,10 +92,22 @@ function CardSection({toggleFocus,focusBackdrop,cardBackdrop,deckSelected,onDele
             setCardData([]);
         }
       }
+
+
+      const handleExit=()=>{
+        toggleFocus(true);
+        setCardFocusType(CARDFOCUSTYPE.DEFAULT);
+        setOutsideFocus(false);
+      }
+
+      
+      
   return (
     <div>
-        <SidebarCards  cardBackdrop={cardBackdrop} cardData={cardData} setCardFocusType={setCardFocusType} setSelectedCard={setSelectedCard} deckSelected={deckSelected}  onDeleteDeckClickHandler={onDeleteDeckClickHandler}/>
-        <CardFocus toggleFocus={toggleFocus} focusBackdrop={focusBackdrop} cardData={cardData} cardFocusType={cardFocusType} checkDuplicate={checkDuplicate} addCard={addCard} editCard={editCard} deletecard={deletecard} selectedCard={selectedCard} deckSelected={deckSelected}/>
+
+        {outsideFocus && <div className={style.OutsideFocus} onClick={handleExit}/>}
+        <SidebarCards setOutsideFocus={setOutsideFocus}  cardBackdrop={cardBackdrop} cardData={cardData} setCardFocusType={setCardFocusType} setSelectedCard={setSelectedCard} deckSelected={deckSelected}  onDeleteDeckClickHandler={onDeleteDeckClickHandler}/>
+        <CardFocus toggleFocus={toggleFocus} focusBackdrop={focusBackdrop} cardData={cardData} cardFocusType={cardFocusType} setCardFocusType={setCardFocusType} checkDuplicate={checkDuplicate} addCard={addCard} editCard={editCard} deletecard={deletecard} selectedCard={selectedCard} deckSelected={deckSelected}/>
     </div>
   )
 }

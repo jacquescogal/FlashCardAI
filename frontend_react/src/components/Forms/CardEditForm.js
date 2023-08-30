@@ -75,7 +75,7 @@ function CardEditForm({checkDuplicate,editCard,selectedCard,deletecard}) {
             <label>
             Term:
             </label>
-            <input 
+            <input maxLength="200"
             ref={termRef}
             type="text" 
             value={term} 
@@ -89,7 +89,7 @@ function CardEditForm({checkDuplicate,editCard,selectedCard,deletecard}) {
             <label>
             Answer:
             </label>
-            <textarea 
+            <textarea maxLength="200"
             type="text" 
             value={answer} 
             onChange={handleAnsInputChange}

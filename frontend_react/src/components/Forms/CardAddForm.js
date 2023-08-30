@@ -76,7 +76,7 @@ function CardAddForm({checkDuplicate,addCard}) {
             <label>
             Term:
             </label>
-            <input 
+            <input maxLength="200"
             ref={termRef}
             type="text" 
             value={term} 
@@ -91,7 +91,7 @@ function CardAddForm({checkDuplicate,addCard}) {
             <label>
             Answer:
             </label>
-            <textarea 
+            <textarea maxLength="200"
             ref={answerRef}
             type="text" 
             value={answer} 
