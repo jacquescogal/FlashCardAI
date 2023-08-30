@@ -4,7 +4,9 @@ import Button,{BUTTONTYPE} from '../Button/Button'
 import Popup from '../Popup/Popup';
 import DeckForm from '../Forms/DeckForm';
 import logoImage from '../../media/logo.png'
+import { useNavigate } from 'react-router-dom';
 function SidebarDeck({deckBackdrop,checkDuplicate, addDeck, updateDeck, deckData=[], onDeckClickHandler, onNewDeckClickHandler, setPopupOpen, popupOpen}) {
+  const navigate=useNavigate();
   return (
     <>
     {(deckBackdrop===true)?<div className={styles.GlassBackdrop}></div>:<></>}
@@ -21,7 +23,9 @@ function SidebarDeck({deckBackdrop,checkDuplicate, addDeck, updateDeck, deckData
       {Array.from({ length: 5-deckData.length }).map((_, index) => (
         <Button buttonType={BUTTONTYPE.DOTTED} onClick={onNewDeckClickHandler}>+ New Deck</Button>
       ))}
+      <Button buttonType={BUTTONTYPE.RED} onClick={()=>{navigate('/')}}>Logout</Button>
       </ul>
+      
       
     </div>
     </>

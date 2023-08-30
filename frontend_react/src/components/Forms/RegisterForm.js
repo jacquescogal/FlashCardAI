@@ -89,14 +89,21 @@ const RegisterForm = ({setLogoLoad,setShowLogin}) => {
             toast.success(`Registered as ${username}`)
             setShowLogin(true)
         } catch (error) {
-            toast.error(error.response.data.message);
-            if (error.response.data.message==="Email exists"){
-                setEmailError("Email already exists")
+            try{
+                toast.error(error.response.data.message);
+                if (error.response.data.message==="Email exists"){
+                    setEmailError("Email already exists")
+                }
+                else if (error.response.data.message==="User exists"){
+                    setUsernameError("Username already exists")
+                }
+                console.error("Registration failed:", error);
             }
-            else if (error.response.data.message==="User exists"){
-                setUsernameError("Username already exists")
+            catch{
+                setUsernameError("Too many registration attempts. Please wait awhile.")
+                console.error("Registration failed:", error);
             }
-            console.error("Login failed:", error);
+            
         }finally{
             setLogoLoad(false);
         }

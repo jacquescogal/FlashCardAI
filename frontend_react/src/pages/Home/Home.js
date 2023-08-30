@@ -42,24 +42,27 @@ function Home() {
     }
   }, [])
 
-  const updateDeck = () => {
+  const updateDeck = (name='') => {
     saveToDB();
     const data = localStorage.getItem('deckData')
     if (data) {
       const parsedData = JSON.parse(data);
       parsedData.forEach(e => {
-        e.active = false;
+        console.log(e.deck_name,name);
+        if (e.deck_name == name) e.active = true;
+        else e.active = false;
       })
       setDeckData(parsedData);
-      setDeckSelected('');
+      setDeckSelected(name);
     }
   }
 
   const addDeck = (name) => {
     const data = deckData;
-    data.push({ deck_uuid: uuidv4(), deck_name: name.toLowerCase() });
+    data.push({ deck_uuid: uuidv4(), deck_name: name.toLowerCase(),active:true });
     localStorage.setItem('deckData', JSON.stringify(data));
-    updateDeck();
+    updateDeck(name.toLowerCase());
+    onDeckClickHandler(name.toLowerCase());
   }
 
   const checkDuplicate = (name) => {

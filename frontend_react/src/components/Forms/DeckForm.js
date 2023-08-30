@@ -31,7 +31,6 @@ function DeckForm({addDeck, checkDuplicate, updateDeck,setPopupOpen}) {
             return;
         }
         addDeck(name);
-        updateDeck();
         setPopupOpen(false);
     };
 

@@ -44,8 +44,7 @@ const LoginForm = ({setShowLogin,setLogoLoad}) => {
                 headers: {
                     'Content-Type': 'application/json'
                 }
-            });
-
+            })
             console.log(response.status)
 
             const { access_token } = response.data;
@@ -56,9 +55,20 @@ const LoginForm = ({setShowLogin,setLogoLoad}) => {
             toast.success(`Logged in as ${username}`)
             navigate('Home')
         } catch (error) {
-            toast.error(error.response.data.message);
-            setInputError("Invalid username or password")
-            console.error("Login failed:", error);
+            try{
+                if (error.response.status===429){
+                    setInputError("Too many login attempts")
+                }
+                else{
+                    setInputError("Invalid username or password ")
+                }
+                console.error("Login failed:", error);
+            }
+            catch{
+                setInputError("Too many login attempts")
+                console.error("Login failed:", error);
+            }
+            
         }
         finally{
             setLogoLoad(false);

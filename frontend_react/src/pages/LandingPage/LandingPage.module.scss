@@ -22,3 +22,10 @@
     height: 5rem;
     border-radius: 10px;
 }
+
+.Link{
+    color:RGB(red($off-white), green($off-white), blue($off-white),1);
+    &:hover{
+        color: rgb(28, 183, 230);
+    }
+}

@@ -37,7 +37,8 @@ function LandingPage({setLogoLoad}) {
           </OptionHolder>
           <p className={styles.Disclaimer}>  Note:<br/>*Awaiting AWS SES approval for email auth and password reset. 
           <br/> *Daily gpt-4 api quota put in place of 200 calls to prevent abuse.
-          <br/> *This is a solo student project and not a commercial product. Do not enter private information.
+          <br/> *This is a solo student project completed in 1 week and not a commercial product. Do not enter private information.
+          <br/> *My github: <a href="https://github.com/jacquescogal" className={styles.Link}>github.com/jacquescogal</a> || Portfolio: <a href="https://jacquescogal.github.io/" className={styles.Link}>jacquescogal.github.io</a>
           </p>
       </header>
       
