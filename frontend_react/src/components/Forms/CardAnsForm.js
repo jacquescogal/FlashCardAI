@@ -251,11 +251,10 @@ const handleExit=()=>{
               <Button className={styles.LeftButton} buttonType={BUTTONTYPE.NORMAL} type="button" width='20%' isActive={leftActive} onClick={prevClickHandler}>{"<"}</Button>
             </> : <div></div>}
             <button ref={leftRef} style={{ display: 'none' }} onClick={prevClickHandler} />
-            <Button buttonType={(buttonActive===true)?BUTTONTYPE.NORMAL:BUTTONTYPE.DISABLED} type="submit" width='80%' isActive={buttonActive} onClick={handleSubmit}>Check Attempt</Button>
+            {(selectedIndex === shuffledCards.length - 1 && feedback !== '' && fetchData===false)?<Button buttonType={BUTTONTYPE.NORMAL} type="submit" width='80%' isActive={finishActive} onClick={() => { setFinishPage(true) }}>Finish</Button>:<Button buttonType={(buttonActive===true)?BUTTONTYPE.NORMAL:BUTTONTYPE.DISABLED} type="submit" width='80%' isActive={buttonActive} onClick={handleSubmit}>Check Attempt</Button>}
             <button ref={rightRef} style={{ display: 'none' }} onClick={nextClickHandler} />
             {selectedIndex < shuffledCards.length - 1 ? <Button className={styles.RightButton} buttonType={(selectedIndex >= shuffledCards.length || fetchData === true || selectedCard.processed===false)?BUTTONTYPE.DISABLED:BUTTONTYPE.NORMAL} type="button" width='20%' isActive={rightActive} onClick={nextClickHandler}>{">"}</Button> : <div></div>}
             <div></div>
-            {selectedIndex === shuffledCards.length - 1 && feedback !== '' && fetchData===false? <Button buttonType={BUTTONTYPE.NORMAL} type="submit" width='80%' isActive={finishActive} onClick={() => { setFinishPage(true) }}>Finish</Button> : <div />}
           </div>
         </form>
         : <>

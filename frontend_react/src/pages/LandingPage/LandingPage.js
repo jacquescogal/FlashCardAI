@@ -51,10 +51,11 @@ function LandingPage({ setLogoLoad }) {
             <Button buttonType={BUTTONTYPE.NORMAL} style={{ width: '50%' }} onClick={() => { setshowPopup(true); setShowLogin(true) }}>Login/Register</Button>
           </OptionHolder>
           <p className={styles.Disclaimer}>  Note:
-            <br /> *This is a solo project completed in 1 week and not a commercial product. Not yet optimized for mobile. Do not enter private information.
-            <br /> *Awaiting AWS SES approval for email auth and forgot password reset functionality.
-            <br /> *Daily gpt-4 shared api token quota of 200 calls to prevent abuse.
-            <br /> *My github: <a href="https://github.com/jacquescogal" className={styles.Link}>github.com/jacquescogal</a> || Portfolio: <a href="https://jacquescogal.github.io/" className={styles.Link}>jacquescogal.github.io</a>
+            <br /> Please do not enter private information.<br /> This is a solo project completed in 1 week made for the purpose of learning and not a commercial product. Not optimized for mobile. 
+            <br /> Awaiting AWS SES approval for email auth and password reset functionality.
+            <br /> Daily gpt-4 shared api token quota of 200 calls to prevent abuse.
+            <br /> My github: <a href="https://github.com/jacquescogal" className={styles.Link}>github.com/jacquescogal</a> || Portfolio: <a href="https://jacquescogal.github.io/" className={styles.Link}>jacquescogal.github.io</a>
+            || LinkedIn: <a href="https://www.linkedin.com/in/j-cogal" className={styles.Link}>linkedin.com/in/j-cogal</a>
           </p>
         </div>
       </header>
